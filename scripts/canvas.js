@@ -1,5 +1,4 @@
 var canvas;
-
 function setup () {
     canvas = new Canvas(document.getElementById("canvasArea"));
 }

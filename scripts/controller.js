@@ -1,5 +1,4 @@
 let editor;
-let terminal;
 var pageState;
 
 let bExecute = document.getElementById("ejecutar");
@@ -8,13 +7,12 @@ let bSave = document.getElementById("guardar");
 let bLoad = document.getElementById("cargar");
 
 editor = new Editor(document.getElementById("editor"));
-terminal = new Terminal(document.getElementById("terminal"));
 
 bExecute.addEventListener('click', function () {
-    canvas.addFigure(Canvas.SQUARE);
-    canvas.addFigure(Canvas.CIRCLE);
-    canvas.addFigure(Canvas.TRIANGLE);
-    
+    terminal.clear();
+    var code = document.getElementById('editor').value;
+    Parser.parse(code);
+
 });
 
 bClear.addEventListener('click', function () {

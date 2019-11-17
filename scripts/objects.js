@@ -97,8 +97,8 @@ class Canvas {
 
     addFigure(figType) {
         let size = this.width / 10;
-        let cX = this.width / 2;
-        let cY = this.height / 2;
+        let cX = this.width / 2 + Math.floor((Math.random() * this.width/2) + 1);
+        let cY = this.height / 2 + Math.floor((Math.random() * this.height/2) + 1);
         let figure;
         switch (figType) {
             case Canvas.SQUARE:
