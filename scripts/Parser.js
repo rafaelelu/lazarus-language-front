@@ -108,7 +108,7 @@ this.$ = $$[$0];
 break;
 case 13:
 
-          this.$ = (function ifstmt (eval, stmt1, stmt2) { return eval ? stmt1 : stmt2 })($$[$0-6], $$[$0-4], $$[$0-2]);
+          if($$[$0-6]){ return $$[$0-4];} else{ return $$[$0-2]; }
         
 break;
 case 14:
@@ -643,23 +643,23 @@ options: {},
 performAction: function anonymous(yy,yy_,$avoiding_name_collisions,YY_START) {
 var YYSTATE=YY_START;
 switch($avoiding_name_collisions) {
-case 0:/*Whitespaces*/
+case 0:return 21
 break;
-case 1:return 7 
+case 1:return 23
 break;
-case 2:return 15
+case 2:return 24
 break;
-case 3:return 16
+case 3:return 25
 break;
-case 4:return 13
+case 4:/*Whitespaces*/
 break;
-case 5:return 21
+case 5:return 7 
 break;
-case 6:return 23
+case 6:return 15
 break;
-case 7:return 24
+case 7:return 16
 break;
-case 8:return 25
+case 8:return 13
 break;
 case 9:return 8
 break;
@@ -699,7 +699,7 @@ case 26:return 'LINE'
 break;
 }
 },
-rules: [/^(?:(\s+))/,/^(?:(declara)\b)/,/^(?:(dibuja)\b)/,/^(?:(circulo|cuadrado|estrella|triangulo|esfera)\b)/,/^(?:(imprime|escribe)\b)/,/^(?:(si)\b)/,/^(?:(entonces)\b)/,/^(?:(de lo contrario)\b)/,/^(?:(fin)\b)/,/^(?:[a-e]|[g-h]|[j-o]|[q-z]\b)/,/^(?:[A-Z\s]+\b)/,/^(?:(=))/,/^(?:(igual)\b)/,/^(?:(\+))/,/^(?:(-))/,/^(?:(\*))/,/^(?:(\^))/,/^(?:(\/))/,/^(?:(!))/,/^(?:(\())/,/^(?:(\)))/,/^(?:(,))/,/^(?:(PI))/,/^(?:(;))/,/^(?:[0-9]+)/,/^(?:.)/,/^(?:(\n))/],
+rules: [/^(?:(si)\b)/,/^(?:(entonces)\b)/,/^(?:(de lo contrario)\b)/,/^(?:(fin)\b)/,/^(?:(\s+))/,/^(?:(declara)\b)/,/^(?:(dibuja)\b)/,/^(?:(circulo|cuadrado|estrella|triangulo|esfera)\b)/,/^(?:(imprime|escribe)\b)/,/^(?:[a-e]|[g-h]|[j-o]|[q-z]\b)/,/^(?:[A-Z\s]+\b)/,/^(?:(=))/,/^(?:(igual)\b)/,/^(?:(\+))/,/^(?:(-))/,/^(?:(\*))/,/^(?:(\^))/,/^(?:(\/))/,/^(?:(!))/,/^(?:(\())/,/^(?:(\)))/,/^(?:(,))/,/^(?:(PI))/,/^(?:(;))/,/^(?:[0-9]+)/,/^(?:.)/,/^(?:(\n))/],
 conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26],"inclusive":true}}
 });
 return lexer;

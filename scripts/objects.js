@@ -127,15 +127,14 @@ class Canvas {
     }
 
     draw() {
-        //translate(mouseX-width/2,0,mouseY-height/2);
         for (let i = 0; i < this.figures.length; i++) {
             this.figures[i].draw();
         }
         for (let i = 0; i < this.polygons.length; i++) {
             this.polygons[i].draw();
         }
-        /*translate(mouseX-width/2,0,mouseY-height/2);
-        rotateX(this.angle);
+        
+        /*rotateX(this.angle);
         torus(50,10);
         translate(-100,0,0);
         fill(0,200,100);
@@ -221,11 +220,13 @@ class Figure {
 
     draw() {
         //stroke(this.color);
+        
         fill(this.color);
         if (this.dragging) {
             this.x = mouseX + this.offsetX;
             this.y = mouseY + this.offsetY;
         }
+        translate(mouseX-width/2,0,mouseY-height/2);
         //fill(0,0,0);
     }
 

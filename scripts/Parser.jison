@@ -1,14 +1,14 @@
 %lex
 %%
+("si")\b     return 'IF'
+("entonces")\b      return 'THEN'
+("de lo contrario")\b     return 'ELSE'
+("fin")\b     return 'FI'
 (\s+) /*Whitespaces*/
 ("declara")\b  	 return 'INTDCL' 
 ("dibuja")\b	return 'DRAW'
 ("circulo"|"cuadrado"|"estrella"|"triangulo"|"esfera")\b	return 'FIGURE'
 ("imprime"|"escribe")\b   return 'PRINT'
-("si")\b     return 'IF'
-("entonces")\b      return 'THEN'
-("de lo contrario")\b     return 'ELSE'
-("fin")\b     return 'FI'
 [a-e]|[g-h]|[j-o]|[q-z]\b 	  return 'ID'
 [A-Z\s]+\b        return 'STRING' 
 ("=")  return 'ASSIGN'  
@@ -67,9 +67,9 @@ stmt: ID ASSIGN expr ENDOFSTMT { symtable[$1] = $3; }
 figures: expr {$$ = $1;}
         ;
 
-ifstmt: IF compare THEN stmt ELSE stmt FI ENDOFSTMT {{
-          $$ = (function ifstmt (eval, stmt1, stmt2) { return eval ? stmt1 : stmt2 })($2, $4, $6);
-        }}
+ifstmt: IF compare THEN stmt ELSE stmt FI ENDOFSTMT {
+          if($2){ return $4;} else{ return $6; }
+        }
         | IF compare THEN stmt FI ENDOFSTMT {{
           $$ = (function ifstmt (eval, stmt1) { return eval ? stmt1 : 1 })($2, $4);
         }}
