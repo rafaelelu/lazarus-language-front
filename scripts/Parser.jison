@@ -11,7 +11,7 @@
 ("fin")\b     return 'FI'
 [a-e]|[g-h]|[j-o]|[q-z]\b 	  return 'ID' 
 ("=")  return 'ASSIGN'  
-("==")  return 'COMPARATOR'
+("igual")\b  return 'COMPARATOR'
 ("+") 	 return 'PLUS' 
 ("-") 	 return 'MINUS' 
 ("*")    return 'TIMES'
@@ -58,17 +58,17 @@ stmt: ID ASSIGN expr ENDOFSTMT { symtable[$1] = $3; }
                 if($2 == 'cuadrado'){canvas.addFigure(Canvas.SQUARE, $4);}
                 if($2 == 'triangulo'){canvas.addFigure(Canvas.TRIANGLE, $4);} 
                 if($2 == 'circulo'){canvas.addFigure(Canvas.CIRCLE, $4);}  
-                if($2 == 'esfera'){canvas.addPolygon('Esfera');}  
+                if($2 == 'esfera'){canvas.addPolygon('Esfera', $4);}  
                 }
         | ifstmt {$$ = $1;}
         ;
 figures: expr {$$ = $1;}
         ;
 
-ifstmt: IF expr THEN stmt ELSE stmt FI ENDOFSTMT {{
+ifstmt: IF compare THEN stmt ELSE stmt FI ENDOFSTMT {{
           $$ = (function ifstmt (eval, stmt1, stmt2) { return eval ? stmt1 : stmt2 })($2, $4, $6);
         }}
-        | IF expr THEN stmt FI ENDOFSTMT {{
+        | IF compare THEN stmt FI ENDOFSTMT {{
           $$ = (function ifstmt (eval, stmt1) { return eval ? stmt1 : 1 })($2, $4);
         }}
         ;
@@ -85,6 +85,8 @@ expr:   expr PLUS expr { $$=$1+$3; }
         | PI {$$=Math.PI;}
         | ID { $$ = symtable[$1]; } 
         | INUM { $$ = Number(yytext); } 
+        ;
+compare: expr COMPARATOR expr {$$ = $1 == $3;}
         ;
 %%
 

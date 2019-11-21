@@ -115,12 +115,12 @@ class Canvas {
         this.figures.push(figure);
     }
 
-    addPolygon(figType){
+    addPolygon(figType, size){
         let figure;
         switch (figType) {
             case "Esfera":
                 console.log("LLegue")
-                figure = new Sphere();
+                figure = new Sphere(size);
                 break;
         } 
         this.polygons.push(figure);
@@ -220,13 +220,13 @@ class Figure {
     }
 
     draw() {
-        stroke(this.color);
+        //stroke(this.color);
         fill(this.color);
         if (this.dragging) {
             this.x = mouseX + this.offsetX;
             this.y = mouseY + this.offsetY;
         }
-        fill(0,0,0);
+        //fill(0,0,0);
     }
 
     getRandColor() {
@@ -385,11 +385,12 @@ class Triangle extends Figure {
 
 }
 class Sphere{
-    Sphere(){
+    Sphere(radius){
+        this.radius = radius;
     }
     draw(){
         rotateY(frameCount * 0.01);
         translate(mouseX-width/2,0,mouseY-height/2);
-        sphere();
+        sphere(this.radius);
     }
 }
