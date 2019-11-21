@@ -9,7 +9,6 @@ let bLoad = document.getElementById("cargar");
 editor = new Editor(document.getElementById("editor"));
 
 bExecute.addEventListener('click', function () {
-    terminal.clear();
     var code = document.getElementById('editor').value;
     Parser.parse(code);
 
@@ -17,7 +16,7 @@ bExecute.addEventListener('click', function () {
 
 bClear.addEventListener('click', function () {
     editor.clear();
-    terminal.clear();
+    //terminal.clear();
     canvas.clear();
 });
 

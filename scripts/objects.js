@@ -40,12 +40,12 @@ class Terminal {
     }
 
     print(str) {
-        this.textArea.value += "\nterminal$ " + str;
+        this.textArea.value += "\nLazarus$ > " + str;
         this.textArea.scrollTop = this.textArea.scrollHeight;
     }
 
     clear() {
-        this.textArea.value = "terminal$";
+        this.textArea.value = "Lazarus$ >";
     }
 }
 
@@ -59,9 +59,10 @@ class Canvas {
         this.parent = parent;
         this.width = this.parent.offsetWidth;
         this.height = this.parent.offsetHeight;
-        this.canvas = createCanvas(this.width, this.height);
+        this.canvas = createCanvas(this.width, this.height, WEBGL);
         this.canvas.parent(parent.id);
         this.figures = [];
+        this.polygons = [];
     }
 
     static get SQUARE() {
@@ -95,10 +96,10 @@ class Canvas {
         this.height = this.parent.offsetHeight;
     }
 
-    addFigure(figType) {
-        let size = this.width / 10;
-        let cX = this.width / 2 + Math.floor((Math.random() * this.width/2) + 1);
-        let cY = this.height / 2 + Math.floor((Math.random() * this.height/2) + 1);
+    addFigure(figType, size) {
+        //let size = this.width / 10;
+        let cX = this.width / 4 ;
+        let cY = this.height / 4 ;
         let figure;
         switch (figType) {
             case Canvas.SQUARE:
@@ -114,11 +115,35 @@ class Canvas {
         this.figures.push(figure);
     }
 
+    addPolygon(figType){
+        let figure;
+        switch (figType) {
+            case "Esfera":
+                console.log("LLegue")
+                figure = new Sphere();
+                break;
+        } 
+        this.polygons.push(figure);
+    }
+
     draw() {
+        translate(mouseX-width/2,0,mouseY-height/2);
         for (let i = 0; i < this.figures.length; i++) {
             this.figures[i].draw();
         }
-
+        for (let i = 0; i < this.polygons.length; i++) {
+            this.polygons[i].draw();
+        }
+        /*translate(mouseX-width/2,0,mouseY-height/2);
+        rotateX(this.angle);
+        torus(50,10);
+        translate(-100,0,0);
+        fill(0,200,100);
+        box();
+        translate(230,0,0);
+        fill(0,0,255)
+        sphere();
+        this.angle +=0.05; */
     }
 
     boundFigures() {
@@ -129,6 +154,7 @@ class Canvas {
 
     clear() {
         this.figures = [];
+        this.polygons = [];
     }
 
     mousePressed() {
@@ -200,6 +226,7 @@ class Figure {
             this.x = mouseX + this.offsetX;
             this.y = mouseY + this.offsetY;
         }
+        fill(0,0,0);
     }
 
     getRandColor() {
@@ -356,4 +383,13 @@ class Triangle extends Figure {
         return Math.abs((x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) / 2.0);
     }
 
+}
+class Sphere{
+    Sphere(){
+    }
+    draw(){
+        rotateY(frameCount * 0.01);
+        translate(mouseX-width/2,0,mouseY-height/2);
+        sphere();
+    }
 }

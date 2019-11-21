@@ -71,16 +71,13 @@
     recoverable: (boolean: TRUE when the parser has a error recovery rule available for this particular error)
   }
 */
-let terminal;
-terminal = new Terminal(document.getElementById("terminal"));
-
 var Parser = (function(){
-var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,8,13,14],$V1=[2,3],$V2=[1,4],$V3=[2,6],$V4=[1,7],$V5=[1,8],$V6=[1,9],$V7=[1,22],$V8=[1,19],$V9=[1,20],$Va=[1,21],$Vb=[1,23],$Vc=[1,24],$Vd=[1,25],$Ve=[1,26],$Vf=[1,27],$Vg=[1,28],$Vh=[1,29],$Vi=[9,16,17,18,19,20,21,23],$Vj=[9,16,17,23],$Vk=[9,16,17,18,19,23];
+var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,8,13,14,20],$V1=[2,3],$V2=[1,4],$V3=[2,6],$V4=[1,7],$V5=[1,8],$V6=[1,9],$V7=[1,11],$V8=[1,8,13,14,20,22,23],$V9=[1,22],$Va=[1,20],$Vb=[1,19],$Vc=[1,21],$Vd=[1,23],$Ve=[1,29],$Vf=[1,30],$Vg=[1,31],$Vh=[1,32],$Vi=[1,33],$Vj=[1,34],$Vk=[9,18,21,24,25,26,27,28,29],$Vl=[9,18,21,24,25],$Vm=[9,18,21,24,25,26,27];
 var parser = {trace: function trace() { },
 yy: {},
-symbols_: {"error":2,"prog":3,"dcls":4,"stmts":5,"dcl":6,"INTDCL":7,"ID":8,"ENDOFSTMT":9,"stmt":10,"ASSIGN":11,"expr":12,"PRINT":13,"DRAW":14,"FIGURE":15,"PLUS":16,"MINUS":17,"TIMES":18,"DIVIDE":19,"POWER":20,"FACTORIAL":21,"OPPARENTHESIS":22,"CLPARENTHESIS":23,"PI":24,"INUM":25,"$accept":0,"$end":1},
-terminals_: {2:"error",7:"INTDCL",8:"ID",9:"ENDOFSTMT",11:"ASSIGN",13:"PRINT",14:"DRAW",15:"FIGURE",16:"PLUS",17:"MINUS",18:"TIMES",19:"DIVIDE",20:"POWER",21:"FACTORIAL",22:"OPPARENTHESIS",23:"CLPARENTHESIS",24:"PI",25:"INUM"},
-productions_: [0,[3,2],[4,2],[4,0],[6,3],[5,3],[5,0],[10,3],[10,2],[10,2],[12,3],[12,3],[12,2],[12,3],[12,3],[12,3],[12,2],[12,3],[12,1],[12,1],[12,1]],
+symbols_: {"error":2,"prog":3,"dcls":4,"stmts":5,"dcl":6,"INTDCL":7,"ID":8,"ENDOFSTMT":9,"stmt":10,"ASSIGN":11,"expr":12,"PRINT":13,"DRAW":14,"FIGURE":15,"OPPARENTHESIS":16,"figures":17,"CLPARENTHESIS":18,"ifstmt":19,"IF":20,"THEN":21,"ELSE":22,"FI":23,"PLUS":24,"MINUS":25,"TIMES":26,"DIVIDE":27,"POWER":28,"FACTORIAL":29,"PI":30,"INUM":31,"$accept":0,"$end":1},
+terminals_: {2:"error",7:"INTDCL",8:"ID",9:"ENDOFSTMT",11:"ASSIGN",13:"PRINT",14:"DRAW",15:"FIGURE",16:"OPPARENTHESIS",18:"CLPARENTHESIS",20:"IF",21:"THEN",22:"ELSE",23:"FI",24:"PLUS",25:"MINUS",26:"TIMES",27:"DIVIDE",28:"POWER",29:"FACTORIAL",30:"PI",31:"INUM"},
+productions_: [0,[3,2],[4,2],[4,0],[6,3],[5,2],[5,0],[10,4],[10,3],[10,6],[10,1],[17,1],[19,8],[19,6],[12,3],[12,3],[12,2],[12,3],[12,3],[12,3],[12,2],[12,3],[12,1],[12,1],[12,1]],
 performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */) {
 /* this == yyval */
 
@@ -90,56 +87,71 @@ case 4:
  symtable[$$[$0-1]] = 0; 
 break;
 case 7:
- symtable[$$[$0-2]] = $$[$0]; 
+ symtable[$$[$0-3]] = $$[$0-1]; 
 break;
 case 8:
-terminal.print(symtable[$$[$0]]);
+terminal.print(symtable[$$[$0-1]]); 
 break;
 case 9:
-    if($$[$0] == 'cuadrado'){canvas.addFigure(Canvas.SQUARE);}
-    if($$[$0] == 'circulo'){canvas.addFigure(Canvas.CIRCLE);}
-    if($$[$0] == 'triangulo'){canvas.addFigure(Canvas.TRIANGLE);}
-//console.log("Placeholder, hacer dibujacion de:", $$[$0], "aqui");
+
+                if($$[$0-4] == 'cuadrado'){canvas.addFigure(Canvas.SQUARE, $$[$0-2]);}
+                if($$[$0-4] == 'triangulo'){canvas.addFigure(Canvas.TRIANGLE, $$[$0-2]);} 
+                if($$[$0-4] == 'circulo'){canvas.addFigure(Canvas.CIRCLE, $$[$0-2]);}  
+                if($$[$0-4] == 'esfera'){canvas.addPolygon('Esfera');}  
+                
 break;
-case 10:
- this.$=$$[$0-2]+$$[$0]; 
-break;
-case 11:
- this.$=$$[$0-2]-$$[$0]; 
+case 10: case 11:
+this.$ = $$[$0];
 break;
 case 12:
-this.$ = -$$[$0];
+
+          this.$ = (function ifstmt (eval, stmt1, stmt2) { return eval ? stmt1 : stmt2 })($$[$0-6], $$[$0-4], $$[$0-2]);
+        
 break;
 case 13:
- this.$=$$[$0-2]*$$[$0]; 
+
+          this.$ = (function ifstmt (eval, stmt1) { return eval ? stmt1 : 1 })($$[$0-4], $$[$0-2]);
+        
 break;
 case 14:
- this.$ =$$[$0-2]/$$[$0]; 
+ this.$=$$[$0-2]+$$[$0]; 
 break;
 case 15:
- this.$ = Math.pow($$[$0-2], $$[$0]);
+ this.$=$$[$0-2]-$$[$0]; 
 break;
 case 16:
+this.$ = -$$[$0];
+break;
+case 17:
+ this.$=$$[$0-2]*$$[$0]; 
+break;
+case 18:
+ this.$ =$$[$0-2]/$$[$0]; 
+break;
+case 19:
+ this.$ = Math.pow($$[$0-2], $$[$0]);
+break;
+case 20:
 
           this.$ = (function fact (n) { return n==0 ? 1 : fact(n-1) * n })($$[$0-1]);
         
 break;
-case 17:
+case 21:
 this.$ = $$[$0-1];
 break;
-case 18:
+case 22:
 this.$=Math.PI;
 break;
-case 19:
+case 23:
  this.$ = symtable[$$[$0]]; 
 break;
-case 20:
+case 24:
  this.$ = Number(yytext); 
 break;
 }
 },
-table: [o($V0,$V1,{3:1,4:2,6:3,7:$V2}),{1:[3]},{1:$V3,5:5,8:$V4,10:6,13:$V5,14:$V6},o($V0,$V1,{6:3,4:10,7:$V2}),{8:[1,11]},{1:[2,1]},{9:[1,12]},{11:[1,13]},{8:[1,14]},{15:[1,15]},o($V0,[2,2]),{9:[1,16]},{1:$V3,5:17,8:$V4,10:6,13:$V5,14:$V6},{8:$V7,12:18,17:$V8,22:$V9,24:$Va,25:$Vb},{9:[2,8]},{9:[2,9]},o([1,7,8,13,14],[2,4]),{1:[2,5]},{9:[2,7],16:$Vc,17:$Vd,18:$Ve,19:$Vf,20:$Vg,21:$Vh},{8:$V7,12:30,17:$V8,22:$V9,24:$Va,25:$Vb},{8:$V7,12:31,17:$V8,22:$V9,24:$Va,25:$Vb},o($Vi,[2,18]),o($Vi,[2,19]),o($Vi,[2,20]),{8:$V7,12:32,17:$V8,22:$V9,24:$Va,25:$Vb},{8:$V7,12:33,17:$V8,22:$V9,24:$Va,25:$Vb},{8:$V7,12:34,17:$V8,22:$V9,24:$Va,25:$Vb},{8:$V7,12:35,17:$V8,22:$V9,24:$Va,25:$Vb},{8:$V7,12:36,17:$V8,22:$V9,24:$Va,25:$Vb},o($Vi,[2,16]),o($Vi,[2,12]),{16:$Vc,17:$Vd,18:$Ve,19:$Vf,20:$Vg,21:$Vh,23:[1,37]},o($Vj,[2,10],{18:$Ve,19:$Vf,20:$Vg,21:$Vh}),o($Vj,[2,11],{18:$Ve,19:$Vf,20:$Vg,21:$Vh}),o($Vk,[2,13],{20:$Vg,21:$Vh}),o($Vk,[2,14],{20:$Vg,21:$Vh}),o([9,16,17,18,19,20,23],[2,15],{21:$Vh}),o($Vi,[2,17])],
-defaultActions: {5:[2,1],14:[2,8],15:[2,9],17:[2,5]},
+table: [o($V0,$V1,{3:1,4:2,6:3,7:$V2}),{1:[3]},{1:$V3,5:5,8:$V4,10:6,13:$V5,14:$V6,19:10,20:$V7},o($V0,$V1,{6:3,4:12,7:$V2}),{8:[1,13]},{1:[2,1]},{1:$V3,5:14,8:$V4,10:6,13:$V5,14:$V6,19:10,20:$V7},{11:[1,15]},{8:[1,16]},{15:[1,17]},o($V8,[2,10]),{8:$V9,12:18,16:$Va,25:$Vb,30:$Vc,31:$Vd},o($V0,[2,2]),{9:[1,24]},{1:[2,5]},{8:$V9,12:25,16:$Va,25:$Vb,30:$Vc,31:$Vd},{9:[1,26]},{16:[1,27]},{21:[1,28],24:$Ve,25:$Vf,26:$Vg,27:$Vh,28:$Vi,29:$Vj},{8:$V9,12:35,16:$Va,25:$Vb,30:$Vc,31:$Vd},{8:$V9,12:36,16:$Va,25:$Vb,30:$Vc,31:$Vd},o($Vk,[2,22]),o($Vk,[2,23]),o($Vk,[2,24]),o([1,7,8,13,14,20],[2,4]),{9:[1,37],24:$Ve,25:$Vf,26:$Vg,27:$Vh,28:$Vi,29:$Vj},o($V8,[2,8]),{8:$V9,12:39,16:$Va,17:38,25:$Vb,30:$Vc,31:$Vd},{8:$V4,10:40,13:$V5,14:$V6,19:10,20:$V7},{8:$V9,12:41,16:$Va,25:$Vb,30:$Vc,31:$Vd},{8:$V9,12:42,16:$Va,25:$Vb,30:$Vc,31:$Vd},{8:$V9,12:43,16:$Va,25:$Vb,30:$Vc,31:$Vd},{8:$V9,12:44,16:$Va,25:$Vb,30:$Vc,31:$Vd},{8:$V9,12:45,16:$Va,25:$Vb,30:$Vc,31:$Vd},o($Vk,[2,20]),o($Vk,[2,16]),{18:[1,46],24:$Ve,25:$Vf,26:$Vg,27:$Vh,28:$Vi,29:$Vj},o($V8,[2,7]),{18:[1,47]},{18:[2,11],24:$Ve,25:$Vf,26:$Vg,27:$Vh,28:$Vi,29:$Vj},{22:[1,48],23:[1,49]},o($Vl,[2,14],{26:$Vg,27:$Vh,28:$Vi,29:$Vj}),o($Vl,[2,15],{26:$Vg,27:$Vh,28:$Vi,29:$Vj}),o($Vm,[2,17],{28:$Vi,29:$Vj}),o($Vm,[2,18],{28:$Vi,29:$Vj}),o([9,18,21,24,25,26,27,28],[2,19],{29:$Vj}),o($Vk,[2,21]),{9:[1,50]},{8:$V4,10:51,13:$V5,14:$V6,19:10,20:$V7},{9:[1,52]},o($V8,[2,9]),{23:[1,53]},o($V8,[2,13]),{9:[1,54]},o($V8,[2,12])],
+defaultActions: {5:[2,1],14:[2,5]},
 parseError: function parseError(str, hash) {
     if (hash.recoverable) {
         this.trace(str);
@@ -178,15 +190,18 @@ parse: function parse(input) {
         vstack.length = vstack.length - n;
         lstack.length = lstack.length - n;
     }
-    _token_stack:
-        var lex = function () {
+            function lex() {
             var token;
-            token = lexer.lex() || EOF;
+            token = tstack.pop() || lexer.lex() || EOF;
             if (typeof token !== 'number') {
+                if (token instanceof Array) {
+                    tstack = token;
+                    token = tstack.pop();
+                }
                 token = self.symbols_[token] || token;
             }
             return token;
-        };
+        }
     var symbol, preErrorSymbol, state, action, a, r, yyval = {}, p, len, newState, expected;
     while (true) {
         state = stack[stack.length - 1];
@@ -198,27 +213,27 @@ parse: function parse(input) {
             }
             action = table[state] && table[state][symbol];
         }
-                    if (typeof action === 'undefined' || !action.length || !action[0]) {
-                var errStr = '';
-                expected = [];
-                for (p in table[state]) {
-                    if (this.terminals_[p] && p > TERROR) {
-                        expected.push('\'' + this.terminals_[p] + '\'');
-                    }
+        if (typeof action === 'undefined' || !action.length || !action[0]) {
+            var errStr = '';
+            expected = [];
+            for (p in table[state]) {
+                if (this.terminals_[p] && p > TERROR) {
+                    expected.push('\'' + this.terminals_[p] + '\'');
                 }
-                if (lexer.showPosition) {
-                    errStr = 'Parse error on line ' + (yylineno + 1) + ':\n' + lexer.showPosition() + '\nExpecting ' + expected.join(', ') + ', got \'' + (this.terminals_[symbol] || symbol) + '\'';
-                } else {
-                    errStr = 'Parse error on line ' + (yylineno + 1) + ': Unexpected ' + (symbol == EOF ? 'end of input' : '\'' + (this.terminals_[symbol] || symbol) + '\'');
-                }
-                this.parseError(errStr, {
-                    text: lexer.match,
-                    token: this.terminals_[symbol] || symbol,
-                    line: lexer.yylineno,
-                    loc: yyloc,
-                    expected: expected
-                });
             }
+            if (lexer.showPosition) {
+                errStr = 'Parse error on line ' + (yylineno + 1) + ':\n' + lexer.showPosition() + '\nExpecting ' + expected.join(', ') + ', got \'' + (this.terminals_[symbol] || symbol) + '\'';
+            } else {
+                errStr = 'Parse error on line ' + (yylineno + 1) + ': Unexpected ' + (symbol == EOF ? 'end of input' : '\'' + (this.terminals_[symbol] || symbol) + '\'');
+            }
+            this.parseError(errStr, {
+                text: lexer.match,
+                token: this.terminals_[symbol] || symbol,
+                line: lexer.yylineno,
+                loc: yyloc,
+                expected: expected
+            });
+        }
         if (action[0] instanceof Array && action.length > 1) {
             throw new Error('Parse Error: multiple actions possible at state: ' + state + ', token: ' + symbol);
         }
@@ -289,6 +304,8 @@ parse: function parse(input) {
 
 
 symtable = []
+let terminal;
+terminal = new Terminal(document.getElementById("terminal"));
 /* generated by jison-lex 0.3.4 */
 var lexer = (function(){
 var lexer = ({
@@ -625,44 +642,54 @@ case 2:return 14
 break;
 case 3:return 15
 break;
-case 4:return 13 
+case 4:return 13
 break;
-case 5:return 8 
+case 5:return 20
 break;
-case 6:return 11  
+case 6:return 21
 break;
-case 7:return 'COMPARATOR'
+case 7:return 22
 break;
-case 8:return 16 
+case 8:return 23
 break;
-case 9:return 17 
+case 9:return 8 
 break;
-case 10:return 18
+case 10:return 11  
 break;
-case 11:return 20 
+case 11:return 'COMPARATOR'
 break;
-case 12:return 19
+case 12:return 24 
 break;
-case 13:return 21
+case 13:return 25 
 break;
-case 14:return 22
+case 14:return 26
 break;
-case 15:return 23
+case 15:return 28 
 break;
-case 16:return 24
+case 16:return 27
 break;
-case 17:return 9 
+case 17:return 29
 break;
-case 18:return 25 
+case 18:return 16
 break;
-case 19:return 'INVALID'
+case 19:return 18
 break;
-case 20:return 'LINE'
+case 20:return 'COMMA' 
+break;
+case 21:return 30
+break;
+case 22:return 9 
+break;
+case 23:return 31 
+break;
+case 24:return 'INVALID'
+break;
+case 25:return 'LINE'
 break;
 }
 },
-rules: [/^(?:(\s+))/,/^(?:(declara)\b)/,/^(?:(dibuja)\b)/,/^(?:(circulo|cuadrado|estrella|triangulo)\b)/,/^(?:(imprime|escribe)\b)/,/^(?:[a-e]|[g-h]|[j-o]|[q-z]\b)/,/^(?:(=))/,/^(?:(==))/,/^(?:(\+))/,/^(?:(-))/,/^(?:(\*))/,/^(?:(\^))/,/^(?:(\/))/,/^(?:(!))/,/^(?:(\())/,/^(?:(\)))/,/^(?:(PI))/,/^(?:(;))/,/^(?:[0-9]+)/,/^(?:.)/,/^(?:(\n))/],
-conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20],"inclusive":true}}
+rules: [/^(?:(\s+))/,/^(?:(declara)\b)/,/^(?:(dibuja)\b)/,/^(?:(circulo|cuadrado|estrella|triangulo|esfera)\b)/,/^(?:(imprime|escribe)\b)/,/^(?:(si)\b)/,/^(?:(entonces)\b)/,/^(?:(de lo contrario)\b)/,/^(?:(fin)\b)/,/^(?:[a-e]|[g-h]|[j-o]|[q-z]\b)/,/^(?:(=))/,/^(?:(==))/,/^(?:(\+))/,/^(?:(-))/,/^(?:(\*))/,/^(?:(\^))/,/^(?:(\/))/,/^(?:(!))/,/^(?:(\())/,/^(?:(\)))/,/^(?:(,))/,/^(?:(PI))/,/^(?:(;))/,/^(?:[0-9]+)/,/^(?:.)/,/^(?:(\n))/],
+conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25],"inclusive":true}}
 });
 return lexer;
 })();
@@ -681,7 +708,7 @@ exports.Parser = Parser.Parser;
 exports.parse = function () { return Parser.parse.apply(Parser, arguments); };
 exports.main = function commonjsMain(args) {
     if (!args[1]) {
-        //console.log('Usage: '+args[0]+' FILE');
+        console.log('Usage: '+args[0]+' FILE');
         process.exit(1);
     }
     var source = require('fs').readFileSync(require('path').normalize(args[1]), "utf8");
