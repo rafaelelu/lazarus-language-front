@@ -9,7 +9,8 @@
 ("entonces")\b      return 'THEN'
 ("de lo contrario")\b     return 'ELSE'
 ("fin")\b     return 'FI'
-[a-e]|[g-h]|[j-o]|[q-z]\b 	  return 'ID' 
+[a-e]|[g-h]|[j-o]|[q-z]\b 	  return 'ID'
+[A-Z\s]+\b        return 'STRING' 
 ("=")  return 'ASSIGN'  
 ("igual")\b  return 'COMPARATOR'
 ("+") 	 return 'PLUS' 
@@ -54,6 +55,7 @@ stmts: stmt stmts
         ;
 stmt: ID ASSIGN expr ENDOFSTMT { symtable[$1] = $3; }
         | PRINT ID ENDOFSTMT {terminal.print(symtable[$2]); }
+        | PRINT STRING ENDOFSTMT {terminal.print($2);}
 	| DRAW FIGURE OPPARENTHESIS figures CLPARENTHESIS ENDOFSTMT {
                 if($2 == 'cuadrado'){canvas.addFigure(Canvas.SQUARE, $4);}
                 if($2 == 'triangulo'){canvas.addFigure(Canvas.TRIANGLE, $4);} 
@@ -84,7 +86,8 @@ expr:   expr PLUS expr { $$=$1+$3; }
         | OPPARENTHESIS expr CLPARENTHESIS {$$ = $2;}
         | PI {$$=Math.PI;}
         | ID { $$ = symtable[$1]; } 
-        | INUM { $$ = Number(yytext); } 
+        | INUM { $$ = Number(yytext); }
+        | STRING { $$ = yytext;} 
         ;
 compare: expr COMPARATOR expr {$$ = $1 == $3;}
         ;

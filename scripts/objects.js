@@ -127,7 +127,7 @@ class Canvas {
     }
 
     draw() {
-        translate(mouseX-width/2,0,mouseY-height/2);
+        //translate(mouseX-width/2,0,mouseY-height/2);
         for (let i = 0; i < this.figures.length; i++) {
             this.figures[i].draw();
         }
@@ -252,8 +252,6 @@ class Figure {
             this.offsetY = this.y - mouseY;
         }
     }
-
-    mouseOver() {}
 
     mouseReleased() {
         this.dragging = false;
@@ -389,8 +387,19 @@ class Sphere{
         this.radius = radius;
     }
     draw(){
-        rotateY(frameCount * 0.01);
-        translate(mouseX-width/2,0,mouseY-height/2);
+        rotateY(frameCount * 0.03);
+        translate(mouseX-width,0,mouseY-height);
         sphere(this.radius);
+    }
+}
+
+class Box{
+    Box(size){
+        this.size = size;
+    }
+    draw(){
+        rotateY(frameCount * 0.01);
+        translate(mouseX,0,mouseY);
+        box(this.size);
     }
 }
