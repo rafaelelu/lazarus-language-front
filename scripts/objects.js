@@ -130,9 +130,6 @@ class Canvas {
         for (let i = 0; i < this.figures.length; i++) {
             this.figures[i].draw();
         }
-        for (let i = 0; i < this.polygons.length; i++) {
-            this.polygons[i].draw();
-        }
         
         /*rotateX(this.angle);
         torus(50,10);
@@ -226,7 +223,6 @@ class Figure {
             this.x = mouseX + this.offsetX;
             this.y = mouseY + this.offsetY;
         }
-        translate(mouseX-width/2,0,mouseY-height/2);
         //fill(0,0,0);
     }
 
@@ -389,7 +385,6 @@ class Sphere{
     }
     draw(){
         rotateY(frameCount * 0.03);
-        translate(mouseX-width,0,mouseY-height);
         sphere(this.radius);
     }
 }
@@ -400,7 +395,6 @@ class Box{
     }
     draw(){
         rotateY(frameCount * 0.01);
-        translate(mouseX,0,mouseY);
         box(this.size);
     }
 }
