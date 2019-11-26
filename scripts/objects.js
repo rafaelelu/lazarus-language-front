@@ -59,7 +59,7 @@ class Canvas {
         this.parent = parent;
         this.width = this.parent.offsetWidth;
         this.height = this.parent.offsetHeight;
-        this.canvas = createCanvas(this.width, this.height, WEBGL);
+        this.canvas = createCanvas(this.width, this.height);
         this.canvas.parent(parent.id);
         this.figures = [];
         this.polygons = [];
